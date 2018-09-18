@@ -83,41 +83,41 @@ class FactureComponentsTestCase(unittest.TestCase):
 class FactureTestCase(unittest.TestCase):
 
     def setUp(self):
+        self.tva = 0.1
         self.client = ClientFactory()
         self.product_lines = [
             ProductLineFactory() for i in range(random.randint(1, 10))
         ]
-        self.facture = Facture.Facture(.1, self.client, self.product_lines)
+        self.facture = Facture.Facture(self.tva, self.client, self.product_lines)
 
     def test_tva_value(self):
         self.assertEqual(self.facture.tva, .1)
 
     def test_product_lines_content(self):
+
         self.assertEqual(self.facture.product_lines, self.product_lines)
 
     def test_client_content(self):
         self.assertEqual(self.facture.client, self.client)
 
     def test_net_price_calcule(self):
-        self.assertEqual(self.facture.net_price, 255.0)
+        net_price = sum(line.price for line in self.product_lines)
+        self.assertEqual(self.facture.net_price, net_price)
 
     def test_tva_calcule(self):
-        self.assertEqual(self.facture.only_tva, 25.5)
+        net_price = sum(line.price for line in self.product_lines)
+        self.assertEqual(self.facture.only_tva, net_price * self.tva)
 
     def test_total_price_calcule(self):
-        self.assertEqual(self.facture.total_price, 280.5)
-
-
-def main():
-    product = ProductFactory()
-    print(product)
+        net_price = sum(line.price for line in self.product_lines)
+        total = net_price * (1 + self.tva)
+        self.assertEqual(self.facture.total_price, total)
 
 
 def content_generator():
     from jinja2 import Environment, FileSystemLoader
     env = Environment(
         loader=FileSystemLoader('../templates')
-
     )
     template = env.get_template('facture.html')
     facture = FactureFactory()
@@ -132,10 +132,14 @@ def generate_pdf(content, filename):
     html.write_pdf(filename, font_config=font_config)
 
 
+def generate_html(content, filename):
+    import pathlib
+    pathlib.Path('/tmp/report.html').write_text(content)
+
+
 if __name__ == '__main__':
-#    main()
+    unittest.main()
     content = content_generator()
     generate_pdf(content, '/tmp/report.pdf')
-#    import pathlib
-#    pathlib.Path('/tmp/report.html').write_text(content)
-#    unittest.main()
+    generate_html(content, '/tmp/report.pdf')
+
