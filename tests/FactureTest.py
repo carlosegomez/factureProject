@@ -1,6 +1,6 @@
 import unittest
-import sys
-sys.path.append('../')
+# import sys
+# sys.path.append('../')
 
 from facture import (Client, Product, ProductLine, Facture)
 
