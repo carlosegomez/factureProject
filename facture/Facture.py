@@ -10,7 +10,7 @@ class Facture:
 
     @property
     def net_price(self):
-        return sum(product_line.product.price * product_line.quantity for product_line in self.product_lines)
+        return sum(product_line.price for product_line in self.product_lines)
 
     @property
     def only_tva(self):

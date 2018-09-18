@@ -6,3 +6,7 @@ import facture.Product as Product
 class ProductLine:
     product: Product
     quantity: int = 0
+
+    @property
+    def price(self):
+        return self.product.price * self.quantity
