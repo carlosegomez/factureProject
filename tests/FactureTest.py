@@ -1,19 +1,17 @@
 import unittest
-import sys
-sys.path.append('../')
-
 import factory
 import random
-
+import sys
+sys.path.append('../')
 from facture import (Client, Product, ProductLine, Facture)
 from faker import Faker
 from faker.providers import BaseProvider
+
 
 fake = Faker()
 
 
 class ProductNameProvider(BaseProvider):
-    __provider__ = 'product_name'
 
     product_names = {'avion', 'board', 'tchupi book', 'screen'}
 
@@ -21,7 +19,14 @@ class ProductNameProvider(BaseProvider):
         return self.random_element(self.product_names)
 
 
+class ProductPriceProvider(BaseProvider):
+
+    def product_price(self):
+        return round(random.uniform(10, 100), 2)
+
+
 fake.add_provider(ProductNameProvider)
+fake.add_provider(ProductPriceProvider)
 
 
 class ClientFactory(factory.Factory):
@@ -36,9 +41,9 @@ class ClientFactory(factory.Factory):
 class ProductFactory(factory.Factory):
     class Meta:
         model = Product.Product
-    name = fake.product_name()
+    name = factory.lazy_attribute(lambda n: fake.product_name())
     desc = ""
-    price = round(random.uniform(10, 100), 2)
+    price = factory.lazy_attribute(lambda p: fake.product_price())
 
 
 class ProductLineFactory(factory.Factory):
@@ -53,7 +58,7 @@ class FactureFactory(factory.Factory):
         model = Facture.Facture
     tva = 0.1
     client = factory.SubFactory(ClientFactory)
-    product_lines = factory.List(ProductLineFactory() for i in range(random.randint(1, 10)))
+    product_lines = factory.List(factory.SubFactory(ProductLineFactory) for i in range(random.randint(1, 10)))
 
 
 class FactureComponentsTestCase(unittest.TestCase):
@@ -141,5 +146,4 @@ if __name__ == '__main__':
     unittest.main()
     content = content_generator()
     generate_pdf(content, '/tmp/report.pdf')
-    generate_html(content, '/tmp/report.pdf')
-
+    generate_html(content, '/tmp/report.html')
