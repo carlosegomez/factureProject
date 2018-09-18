@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from facture import (ProductLine, Client)
+from facture import (Client)
 
 
 @dataclass
 class Facture:
     tva: float
     client: Client
-    product_lines: ProductLine
+    product_lines: list
 
     @property
     def net_price(self):
