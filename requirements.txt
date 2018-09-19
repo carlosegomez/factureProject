@@ -2,3 +2,4 @@ factory_boy
 faker
 jinja2
 requests
+responses
