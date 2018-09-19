@@ -107,16 +107,16 @@ class FactureTestCase(unittest.TestCase):
 
     def test_net_price_calcule(self):
         net_price = sum(line.price for line in self.product_lines)
-        self.assertEqual(self.facture.net_price, net_price)
+        self.assertEqual(round(self.facture.net_price, 2), round(net_price, 2))
 
     def test_tva_calcule(self):
         net_price = sum(line.price for line in self.product_lines)
-        self.assertEqual(self.facture.only_tva, net_price * self.tva)
+        self.assertEqual(round(self.facture.only_tva, 2), round(net_price * self.tva, 2))
 
     def test_total_price_calcule(self):
         net_price = sum(line.price for line in self.product_lines)
         total = net_price * (1 + self.tva)
-        self.assertEqual(self.facture.total_price, total)
+        self.assertEqual(round(self.facture.total_price, 2), round(total, 2))
 
 
 def content_generator():
