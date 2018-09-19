@@ -4,6 +4,7 @@ import responses
 
 from dataclasses import dataclass
 
+
 @dataclass
 class User:
     first_name: str = ''
@@ -46,37 +47,34 @@ USER_MOCK = {
 }
 
 
-@pytest.mark.skip
 @responses.activate
-def test_response_ok(self):
+def test_response_ok():
     responses.add(responses.GET, 'https://randomuser.me/api/', json=USER_MOCK)
     user = get_user()
-    self.assertIsInstance(user, User)
-    self.assertEqual(user.first_name, 'mabel')
-    self.assertEqual(user.last_name, 'fleming')
+    assert isinstance(user, User)
+    assert user.first_name == 'mabel'
+    assert user.last_name == 'fleming'
 
 
-@pytest.mark.skip
 @responses.activate
-def test_response_ko(self):
+def test_response_ko():
     responses.add(responses.GET, 'https://randomuser.me/api/', status=404)
-    with self.assertRaises(HttpNotFoundException):
+    with pytest.raises(HttpNotFoundException):
         get_user()
 
 
-@pytest.mark.skip
 @responses.activate
-def test_connection_ko(self):
-    with self.assertRaises(APIDisconnectException):
+def test_connection_ko():
+    with pytest.raises(APIDisconnectException):
         get_user()
 
 
 def test(mocker):
     mock_user = User.create_from_api(USER_MOCK)
-    mocker.patch('tests.mock_pytest_demo.get_user', return_value=mock_user)
+    mocker.patch('tests.pytest_mock_demo.get_user', return_value=mock_user)
     user = get_user()
     assert user.first_name == 'mabel'
-    assert  user.last_name == 'fleming'
+    assert user.last_name == 'fleming'
 
 #
 # if __name__ == '__main__':
