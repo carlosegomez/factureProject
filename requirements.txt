@@ -3,3 +3,5 @@ faker
 jinja2
 requests
 responses
+pytest
+pytest-mock
