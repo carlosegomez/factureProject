@@ -1,7 +1,9 @@
 import requests
 import responses
 import unittest
+
 from dataclasses import dataclass
+from unittest import mock
 
 
 @dataclass
@@ -37,36 +39,46 @@ def get_user():
         raise APIDisconnectException()
 
 
-class GetUserTest(unittest.TestCase):
+USER_MOCK = {
+    'results': [{
+        'name': dict(title='ms', first='mabel', last='fleming'),
+        'email': 'mabel.fleming@example.com',
+        'login': dict(username='heavyfrog837')
+    }]
+}
 
-    USER_MOCK = {
-        'results': [{
-            'name': dict(title='ms', first='mabel', last='fleming'),
-            'email': 'mabel.fleming@example.com',
-            'login': dict(username='heavyfrog837')
-        }]
-    }
 
-    @unittest.skip
+@unittest.skip
+class GetUserInternalTest(unittest.TestCase):
+
     @responses.activate
     def test_response_ok(self):
-        responses.add(responses.GET, 'https://randomuser.me/api/', json=self.USER_MOCK)
+        responses.add(responses.GET, 'https://randomuser.me/api/', json=USER_MOCK)
         user = get_user()
         self.assertIsInstance(user, User)
         self.assertEqual(user.first_name, 'mabel')
+        self.assertEqual(user.last_name, 'fleming')
 
-    @unittest.skip
     @responses.activate
     def test_response_ko(self):
         responses.add(responses.GET, 'https://randomuser.me/api/', status=404)
         with self.assertRaises(HttpNotFoundException):
             get_user()
 
-    @unittest.skip
     @responses.activate
     def test_connection_ko(self):
         with self.assertRaises(APIDisconnectException):
             get_user()
+
+
+class GetUserTest(unittest.TestCase):
+
+    @mock.patch('mock_demo.get_user')
+    def test(self, mock_get_user):
+        mock_get_user.return_value = User.create_from_api(USER_MOCK)
+        user = get_user()
+        self.assertEqual(user.first_name, 'mabel')
+        self.assertEqual(user.last_name, 'fleming')
 
 
 if __name__ == '__main__':
