@@ -6,4 +6,5 @@ install:
 script:
   - python -m unittest tests/FactureTest.py
   - python -m unittest tests/mock_demo.py
+  - python -m pytest tests/pytest_mock_demo.py
 
