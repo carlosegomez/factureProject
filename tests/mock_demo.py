@@ -1,8 +1,7 @@
 import requests
 import responses
 import unittest
-import sys
-sys.path.append('../')
+
 from dataclasses import dataclass
 from unittest import mock
 
@@ -74,7 +73,7 @@ class GetUserInternalTest(unittest.TestCase):
 
 class GetUserTest(unittest.TestCase):
 
-    @mock.patch('mock_demo.get_user')
+    @mock.patch('tests.mock_demo.get_user')
     def test(self, mock_get_user):
         mock_get_user.return_value = User.create_from_api(USER_MOCK)
         user = get_user()
