@@ -1,7 +1,8 @@
 import requests
 import responses
 import unittest
-
+import sys
+sys.path.append('../')
 from dataclasses import dataclass
 from unittest import mock
 
