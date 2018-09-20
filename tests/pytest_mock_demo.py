@@ -15,7 +15,8 @@ class User:
     @classmethod
     def create_from_api(cls, result):
         record = result['results'][0]
-        return cls(record['name']['first'], record['name']['last'], record['email'], record['login']['username'])
+        return cls(record['name']['first'], record['name']['last'],
+                   record['email'], record['login']['username'])
 
 
 class APIDisconnectException(Exception):
@@ -51,19 +52,18 @@ class TestGetUserInternal:
 
     @responses.activate
     def test_response_ok(self):
-        responses.add(responses.GET, 'https://randomuser.me/api/', json=USER_MOCK)
+        responses.add(responses.GET, 'https://randomuser.me/api/',
+                      json=USER_MOCK)
         user = get_user()
         assert isinstance(user, User)
         assert user.first_name == 'mabel'
         assert user.last_name == 'fleming'
-
 
     @responses.activate
     def test_response_ko(self):
         responses.add(responses.GET, 'https://randomuser.me/api/', status=404)
         with pytest.raises(HttpNotFoundException):
             get_user()
-
 
     @responses.activate
     def test_connection_ko(self):
@@ -89,6 +89,3 @@ def test(mocker):
     #     print('Connection error')
     # except HttpNotFoundException:
     #     print('Address not found')
-
-
-
