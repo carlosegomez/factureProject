@@ -27,7 +27,15 @@
 - Code: `flake8`, `pylint`
 - Organize code: `isort`
 
+#Documentation
+- `sphinx`
+
 #Tools
 - `EditorConfig`: share config between editors
 - `virtualenv`, `virualfish`: manage virtual env
+- `pipdevtree`: package dependency tree
+
+#Binary
+- egg
+- wheels
 

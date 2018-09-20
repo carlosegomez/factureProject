@@ -78,14 +78,14 @@ def test(mocker):
     assert user.first_name == 'mabel'
     assert user.last_name == 'fleming'
 
-#
+
 # if __name__ == '__main__':
 #     pass
-    # unittest.main()
-    # try:
-    #     user = get_user('https://randomuser.me/api/')
-    #     print(user)
-    # except APIDisconnectException:
-    #     print('Connection error')
-    # except HttpNotFoundException:
-    #     print('Address not found')
+#     unittest.main()
+#     try:
+#         user = get_user('https://randomuser.me/api/')
+#         print(user)
+#     except APIDisconnectException:
+#         print('Connection error')
+#     except HttpNotFoundException:
+#         print('Address not found')
