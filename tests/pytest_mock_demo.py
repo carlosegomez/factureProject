@@ -47,26 +47,28 @@ USER_MOCK = {
 }
 
 
-@responses.activate
-def test_response_ok():
-    responses.add(responses.GET, 'https://randomuser.me/api/', json=USER_MOCK)
-    user = get_user()
-    assert isinstance(user, User)
-    assert user.first_name == 'mabel'
-    assert user.last_name == 'fleming'
+class TestGetUserInternal:
+
+    @responses.activate
+    def test_response_ok(self):
+        responses.add(responses.GET, 'https://randomuser.me/api/', json=USER_MOCK)
+        user = get_user()
+        assert isinstance(user, User)
+        assert user.first_name == 'mabel'
+        assert user.last_name == 'fleming'
 
 
-@responses.activate
-def test_response_ko():
-    responses.add(responses.GET, 'https://randomuser.me/api/', status=404)
-    with pytest.raises(HttpNotFoundException):
-        get_user()
+    @responses.activate
+    def test_response_ko(self):
+        responses.add(responses.GET, 'https://randomuser.me/api/', status=404)
+        with pytest.raises(HttpNotFoundException):
+            get_user()
 
 
-@responses.activate
-def test_connection_ko():
-    with pytest.raises(APIDisconnectException):
-        get_user()
+    @responses.activate
+    def test_connection_ko(self):
+        with pytest.raises(APIDisconnectException):
+            get_user()
 
 
 def test(mocker):
