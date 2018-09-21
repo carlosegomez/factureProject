@@ -1,44 +1,48 @@
-import functools
-import requests
-import time
+import datetime
+import pathlib
+import bs4
 
 
-def debug(active=True):
-    def nested(function):
-        @functools.wraps(function)
-        def wrapper(*args, **kwargs):
-            result = function(*args, **kwargs)
-            if active:
-                print('function', function.__name__)
-                print("args:", args)
-                print("kwargs", kwargs)
-                print(result)
-            return result
-        return wrapper
-    return nested
+class Page:
+    def __init__(self, soup):
+        self.soup = soup
 
 
-#get_user = debug(active=True)(get_user)
-#print(get_user())
+class Field:
+    def __init__(self, css_selector):
+        self.css_selector = css_selector
 
 
-def calc_time(function):
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        function(*args, **kwargs)
-        stop = time.time()
-        time_exe = stop - start
-        return time_exe
-    return wrapper
+class TextInput(Field):
+    def __get__(self, instance, owner):
+        element = instance.soup.select_one(self.css_selector)
+        return element.text.strip()
 
 
-@calc_time
-# @debug(True)
-def get_user():
-    response = requests.get('https://randomuser.me/api')
-    return response.json()
+class DateInput(TextInput):
+    def __get__(self, instance, owner):
+        value = super().__get__(instance, owner)
+        return datetime.datetime.strptime(value, "%d/%m/%Y").date()
 
-print(get_user())
 
+class BasolPage(Page):
+    region = TextInput("span:nth-of-type(1)")
+    departement = TextInput("span:nth-of-type(2)")
+    number = TextInput("span:nth-of-type(3)")
+    date = DateInput("span:nth-of-type(6)")
+    author = TextInput("span:nth-of-type(7)")
+    usual_name = TextInput("span:nth-of-type(9)")
+
+
+content = pathlib.Path('/home/formation/Downloads/basol.html').read_text()
+soup = bs4.BeautifulSoup(content, 'html.parser')
+
+page = BasolPage(soup)
+
+print(page.region)
+print(page.departement)
+print(page.number)
+print(page.date)
+print(page.author)
+print(page.usual_name)
 

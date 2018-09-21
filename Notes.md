@@ -1,10 +1,52 @@
-#Pytest
+#Modules
+- `pylint` > code analizer
+- `intertools`
+- `coverage` > test coverate analysis
+- `factory_boy` + `faker` > fake data for tests 
+- `pdb` > debug
+- `weasyprint` > easy formatted print
+- `psutils` > process analysis
+- `cookiecutter` > template for Python packages
+- `twine` > upload Python package to pypi
+- `pipenv` > create a venv for package in dev
+
+#Documentation
+- `sphinx`
+
+#Tools
+- `EditorConfig`: share config between editors
+- `virtualenv`, `virualfish`: manage virtual env
+- `pipdevtree`: print package dependency tree
+- `beautifulsoup`: to parse files
+- `zeal`: find docs to be offline 
+- `slack`: notifications
+- `restic`: HD backup to cloud
+- `ansible`: dev conf backup 
+- `devpi`: pypi server
+- `KeePassXC`: Password manager
+- `Numba`: code optimizer
+
+
+#Binary
+- egg
+- wheels
+
+#Concepts
+- Metaclass
+- Decorators
+- Mixing
+- Descriptors
+
+#Test: Pytest
 
 ##Modules
 - `pytest-profiling`
 - `pytest-flake8`
 - `pytest-cov`
 - `pytest-mock`
+- `watchdog` > execute auto-test when code is changed
+- `pytest-runner` > execute auto-test when test are changed
+- `pytest-deamon` > execute auto-test when test are changed
 
 ##Options
 - passed tests: `-v`
@@ -27,15 +69,14 @@
 - Code: `flake8`, `pylint`
 - Organize code: `isort`
 
-#Documentation
-- `sphinx`
+#Pages
+- http://devguide.python.org
+- http://pymotw.com
 
-#Tools
-- `EditorConfig`: share config between editors
-- `virtualenv`, `virualfish`: manage virtual env
-- `pipdevtree`: package dependency tree
+#Books
+- Head First Design Patterns
+- Head-First Python: Paul Barry
+- Python Testing with pytest: Brian Okken
+- The Hacker's Guide to Scaling Python: Julien Danjou
 
-#Binary
-- egg
-- wheels
 
