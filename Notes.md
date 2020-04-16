@@ -1,4 +1,4 @@
-#Modules
+# Modules
 - `pylint` > code analizer
 - `intertools`
 - `coverage` > test coverate analysis
@@ -10,10 +10,10 @@
 - `twine` > upload Python package to pypi
 - `pipenv` > create a venv for package in dev
 
-#Documentation
+# Documentation
 - `sphinx`
 
-#Tools
+# Tools
 - `EditorConfig`: share config between editors
 - `virtualenv`, `virualfish`: manage virtual env
 - `pipdevtree`: print package dependency tree
@@ -26,20 +26,19 @@
 - `KeePassXC`: Password manager
 - `Numba`: code optimizer
 
-
-#Binary
+# Binary
 - egg
 - wheels
 
-#Concepts
+# Concepts
 - Metaclass
 - Decorators
 - Mixing
 - Descriptors
 
-#Test: Pytest
+# Test: Pytest
 
-##Modules
+## Modules
 - `pytest-profiling`
 - `pytest-flake8`
 - `pytest-cov`
@@ -48,7 +47,7 @@
 - `pytest-runner` > execute auto-test when test are changed
 - `pytest-deamon` > execute auto-test when test are changed
 
-##Options
+## Options
 - passed tests: `-v`
 - print: `-s`
 - debug: `--pdb`
@@ -57,11 +56,11 @@
 - code coverage: `--cov --cov-report=html` 
 - On pytest.ini: `addopts` add options
 
-##Profiling tests
+## Profiling tests
 - Only data: `pytest <pytest_file.py> --profile`
 - Graph: `pytest <pytest_file.py> --profile-svg`
 
-#Profiling
+# Profiling
 - Memory: `python -m memory_profiler <file.py>`
 - Memory (other): `vmprof`
 - Plot memory profile: `mprof run <file.py>`, `mprof plot`    
@@ -69,14 +68,12 @@
 - Code: `flake8`, `pylint`
 - Organize code: `isort`
 
-#Pages
+# Pages
 - http://devguide.python.org
 - http://pymotw.com
 
-#Books
+# Books
 - Head First Design Patterns
 - Head-First Python: Paul Barry
 - Python Testing with pytest: Brian Okken
 - The Hacker's Guide to Scaling Python: Julien Danjou
-
-
